@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npx wrangler:*)",
+      "Bash(gh org:*)",
+      "Bash(gh repo:*)",
+      "Bash(TOKEN=\"n8PZMsA7ZeQ4KHYyL4QQf7eEkYjUHkZ3iAv2cOKOfOE.obZHuHdCthglr8IuBIhXcvHuylDuGhQN4Ron00fSPq8\")",
+      "Bash(curl -s \"https://api.cloudflare.com/client/v4/accounts/34f4732dca54f8db9a579893b75873b9/pages/projects/postcutover-instructions/domains\" -H \"Authorization: Bearer $TOKEN\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(ZONE_ID=\"62c8e3cd3909a77ff6ee4419c56a4418\")",
+      "Bash(curl -s -X POST \"https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records\" -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\" --data '{\"\"\"\"type\"\"\"\":\"\"\"\"CNAME\"\"\"\",\"\"\"\"name\"\"\"\":\"\"\"\"postcutover\"\"\"\",\"\"\"\"content\"\"\"\":\"\"\"\"postcutover-instructions.pages.dev\"\"\"\",\"\"\"\"proxied\"\"\"\":true}')",
+      "Read(//Users/jonathanbyrd/**)",
+      "Bash(env)",
+      "Bash(mkdir -p onedrive)",
+      "Bash(mv index.html onedrive/index.html)",
+      "Bash(curl -s -X POST \"https://api.cloudflare.com/client/v4/accounts/34f4732dca54f8db9a579893b75873b9/pages/projects/setup-guides/domains\" -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\" --data '{\"\"\"\"name\"\"\"\":\"\"\"\"setup.nexsite.co\"\"\"\"}')"
+    ]
+  }
+}

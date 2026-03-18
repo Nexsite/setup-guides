@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Site — Getting Started with OneDrive &amp; SharePoint</title>
+<style>
+  :root {
+    --blue:   #0f5fce;
+    --blue-l: #e8f0fd;
+    --green:  #1a9e6e;
+    --green-l:#e6f7f1;
+    --yellow: #d97706;
+    --yellow-l:#fef3c7;
+    --gray:   #374151;
+    --gray-l: #f3f4f6;
+    --border: #e5e7eb;
+    --text:   #111827;
+    --muted:  #6b7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: var(--text); font-size: 15px; line-height: 1.6; }
+
+  /* ── HERO ── */
+  .hero { background: linear-gradient(135deg, #0f5fce 0%, #1d4ed8 60%, #4338ca 100%); color: white; padding: 48px 24px 40px; text-align: center; }
+  .hero-logo { font-size: 13px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.75; margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(24px, 5vw, 36px); font-weight: 700; margin-bottom: 8px; }
+  .hero p { font-size: 16px; opacity: 0.85; max-width: 600px; margin: 0 auto 24px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(26,158,110,0.25); border: 1px solid rgba(26,158,110,0.5); border-radius: 999px; padding: 8px 20px; font-size: 13px; font-weight: 600; }
+
+  /* ── TOGGLE BAR (full-width under hero) ── */
+  .toggle-wrap { background: white; border-bottom: 1px solid var(--border); padding: 16px 24px; text-align: center; position: sticky; top: 0; z-index: 10; }
+  .toggle-bar { display: inline-flex; background: var(--gray-l); border-radius: 999px; padding: 4px; }
+  .toggle-btn { padding: 10px 28px; border-radius: 999px; border: none; background: transparent; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+  .toggle-btn.active { background: var(--blue); color: white; box-shadow: 0 2px 8px rgba(15,95,206,0.25); }
+  .toggle-btn:hover:not(.active) { color: var(--text); }
+
+  /* ── PAGE BODY ── */
+  .page-body { max-width: 1200px; margin: 0 auto; padding: 32px 24px 60px; }
+
+  /* ── TWO-COL GRID for instruction cards ── */
+  .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .cards-grid .card.full-width { grid-column: 1 / -1; }
+
+  /* ── CARDS ── */
+  .card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+  .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .card h3 .card-icon { font-size: 18px; }
+
+  /* ── STEP LIST (numbered) ── */
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li { counter-increment: steps; display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .step-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .step-list li:first-child { padding-top: 0; }
+  .step-list li::before { content: counter(steps); width: 26px; height: 26px; border-radius: 50%; background: var(--blue-l); color: var(--blue); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .step-list li span { flex: 1; }
+  .step-list a { color: var(--blue); text-decoration: none; font-weight: 600; }
+  .step-list a:hover { text-decoration: underline; }
+
+  /* ── BULLET LIST ── */
+  .info-list { list-style: none; }
+  .info-list li { padding: 6px 0; padding-left: 18px; position: relative; font-size: 14px; }
+  .info-list li::before { content: ''; position: absolute; left: 0; top: 14px; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+  .info-list li + li { border-top: 1px solid var(--border); }
+  .info-list strong { color: var(--text); }
+  .info-list code { background: var(--gray-l); padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+
+  /* ── TIPS (horizontal row) ── */
+  .tip-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tip { display: flex; gap: 10px; align-items: flex-start; padding: 14px; background: var(--blue-l); border-radius: 10px; font-size: 13px; border: 1px solid var(--border); }
+  .tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .tip--green { background: var(--green-l); }
+  .tip--yellow { background: var(--yellow-l); }
+
+  /* ── BOTTOM ROW: FAQ + HELPDESK side by side ── */
+  .bottom-row { display: grid; grid-template-columns: 1fr 320px; gap: 24px; margin-top: 24px; }
+
+  /* ── FAQ ── */
+  .faq-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .faq-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; overflow: hidden; background: white; }
+  .faq-q { width: 100%; text-align: left; background: none; border: none; padding: 12px 14px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px; line-height: 1.4; }
+  .faq-q:hover { background: var(--gray-l); }
+  .faq-chevron { font-size: 16px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); }
+  .faq-a { display: none; padding: 0 14px 12px; font-size: 13px; color: var(--gray); line-height: 1.7; border-top: 1px solid var(--border); }
+  .faq-a p { margin-top: 8px; }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── HELPDESK CARD ── */
+  .helpdesk-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; align-self: start; }
+  .helpdesk-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .contact-sub { font-size: 12px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+  .contact-buttons { display: flex; flex-direction: column; gap: 10px; }
+  .contact-btn { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; text-decoration: none; font-size: 13px; font-weight: 600; border: 2px solid transparent; transition: filter 0.15s, transform 0.1s; }
+  .contact-btn:hover { filter: brightness(1.07); transform: translateY(-1px); }
+  .contact-btn:active { transform: none; }
+  .contact-btn-icon { font-size: 20px; flex-shrink: 0; }
+  .contact-btn-text .label { display: block; }
+  .contact-btn-text .value { display: block; font-size: 11px; font-weight: 400; opacity: 0.8; margin-top: 1px; }
+  .btn-ticket { background: var(--blue); color: white; }
+  .btn-phone  { background: var(--green); color: white; }
+  .btn-email  { background: white; color: var(--text); border-color: var(--border); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); }
+
+  /* ── DARK MODE ── */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --blue:   #4d9aff;
+      --blue-l: #1a2a42;
+      --green:  #34d399;
+      --green-l:#162e26;
+      --yellow: #fbbf24;
+      --yellow-l:#2e2410;
+      --gray:   #d1d5db;
+      --gray-l: #1f2937;
+      --border: #374151;
+      --text:   #f3f4f6;
+      --muted:  #9ca3af;
+    }
+    body { background: #111827; }
+    .hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e3a8a 60%, #312e81 100%); }
+    .hero-badge { background: rgba(52,211,153,0.15); border-color: rgba(52,211,153,0.35); }
+    .toggle-wrap { background: #1f2937; border-bottom-color: var(--border); }
+    .toggle-bar { background: #374151; }
+    .toggle-btn { color: #9ca3af; }
+    .toggle-btn.active { background: #2563eb; color: white; box-shadow: 0 2px 8px rgba(37,99,235,0.35); }
+    .toggle-btn:hover:not(.active) { color: #e5e7eb; }
+    .card { background: #1f2937; border-color: var(--border); }
+    .step-list li { border-bottom-color: var(--border); }
+    .step-list li::before { background: var(--blue-l); color: var(--blue); }
+    .step-list a { color: var(--blue); }
+    .info-list li + li { border-top-color: var(--border); }
+    .info-list li::before { background: var(--blue); }
+    .info-list code { background: #374151; color: #e5e7eb; }
+    .tip { border-color: var(--border); }
+    .faq-card { background: #1f2937; border-color: var(--border); }
+    .faq-item { background: #111827; border-color: var(--border); }
+    .faq-q { color: var(--text); }
+    .faq-q:hover { background: #374151; }
+    .faq-a { border-top-color: var(--border); color: #d1d5db; }
+    .faq-a code { background: #374151; color: #e5e7eb; }
+    .helpdesk-card { background: #1f2937; border-color: var(--border); }
+    .contact-sub { color: #9ca3af; }
+    .btn-ticket { background: #2563eb; }
+    .btn-phone { background: #059669; }
+    .btn-email { background: #1f2937; color: var(--text); border-color: var(--border); }
+    footer { border-top-color: var(--border); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .tip-row { grid-template-columns: 1fr; }
+    .bottom-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .toggle-btn { padding: 8px 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-logo">Safe Site Utility Services</div>
+  <h1>Getting Started with OneDrive &amp;&nbsp;SharePoint</h1>
+  <p>Your company files are moving from Google Drive to Microsoft 365. Follow this guide to set up OneDrive and get ready for the switch.</p>
+  <div class="hero-badge">
+    <span>&#128197;</span>
+    Switchover: Monday, March 24
+  </div>
+</div>
+
+<!-- Sticky toggle -->
+<div class="toggle-wrap">
+  <div class="toggle-bar">
+    <button class="toggle-btn active" data-view="desktop" onclick="switchView('desktop')">Desktop (OneDrive App)</button>
+    <button class="toggle-btn" data-view="web" onclick="switchView('web')">OneDrive Web</button>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- ═══ DESKTOP INSTRUCTIONS ═══ -->
+  <div id="view-desktop">
+
+    <div class="cards-grid">
+      <div class="card">
+        <h3><span class="card-icon">&#128187;</span> First-Time Setup</h3>
+        <ol class="step-list">
+          <li><span><strong>Find OneDrive</strong> &mdash; OneDrive is already installed on your computer. Look in your system tray (Windows, bottom-right near the clock) or menu bar (Mac, top-right) for a <strong>cloud icon</strong>. If you see a <strong>blue cloud</strong>, OneDrive is signed in and running &mdash; skip to step 4. If you see a <strong>grey cloud</strong>, OneDrive is installed but not signed in &mdash; go to step 2. If you don't see any cloud icon, search for <em>"OneDrive"</em> in the Start menu (Windows) or Spotlight (Mac) and open it. If it's not installed, <a href="https://www.microsoft.com/en-us/microsoft-365/onedrive/download" target="_blank">download it here</a>.</span></li>
+          <li><span><strong>Sign in</strong> &mdash; Click the grey cloud icon (or open OneDrive from the Start menu/Spotlight). A sign-in window will appear. Enter your <code>@safesitellc.com</code> email address and click <em>Sign in</em>, then enter your password. This is the same account you use for Outlook and Microsoft 365. If prompted to choose a folder location, the default is fine.</span></li>
+          <li><span><strong>Verify it's working</strong> &mdash; After signing in, the cloud icon should turn <strong>blue</strong>. Hover over it to see sync progress. The first sync may take a while depending on how many files you have. If the icon stays grey, try right-clicking it and choosing <em>"Sign in"</em>.</span></li>
+          <li><span><strong>Shared drive shortcuts will appear</strong> &mdash; After the March 24 switchover, IT will add shortcuts to the shared drives you have access to. They'll show up as folders in your OneDrive (e.g., "Accounting", "Dispatch", "Admin").</span></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3><span class="card-icon">&#128193;</span> Accessing Shared Drive Files</h3>
+        <ul class="info-list">
+          <li>Open <strong>File Explorer</strong> (Windows) or <strong>Finder</strong> (Mac) and look for your OneDrive folder in the sidebar.</li>
+          <li>Inside OneDrive you'll see shortcut folders for each shared drive you have access to &mdash; e.g., <code>Accounting</code>, <code>Dispatch</code>, or <code>Admin</code>.</li>
+          <li>These shortcuts link directly to SharePoint. Click into them and browse files like any other folder.</li>
+          <li>Files sync automatically. Open, edit, and save them exactly like normal local files.</li>
+          <li>Changes are saved to SharePoint and visible to your team in real time.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tips row -->
+    <div class="tip-row">
+      <div class="tip tip--green">
+        <span class="tip-icon">&#9989;</span>
+        <span><strong>Cloud icons:</strong> Blue cloud = signed in. Grey cloud = not signed in. Green checkmark on files = synced. Red X = problem &mdash; right-click for details.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">&#128229;</span>
+        <span><strong>Offline access:</strong> Right-click a file &rarr; <em>"Always keep on this device"</em> for use without internet.</span>
+      </div>
+      <div class="tip tip--yellow">
+        <span class="tip-icon">&#9888;&#65039;</span>
+        <span><strong>Missing a shortcut?</strong> Contact IT helpdesk and they'll add it for you right away.</span>
+      </div>
+    </div>
+
+  </div><!-- /view-desktop -->
+
+  <!-- ═══ WEB INSTRUCTIONS ═══ -->
+  <div id="view-web" style="display:none">
+
+    <div class="cards-grid">
+      <div class="card">
+        <h3><span class="card-icon">&#127760;</span> Getting Started</h3>
+        <ol class="step-list">
+          <li><span><strong>Go to office.com</strong> &mdash; Open your browser and navigate to <a href="https://www.office.com" target="_blank">www.office.com</a>. Sign in with your <code>@safesitellc.com</code> email and password. You'll land on the Microsoft 365 Copilot home page.</span></li>
+          <li><span><strong>Open OneDrive</strong> &mdash; Click <strong>"Apps"</strong> in the left sidebar, then click <strong>"OneDrive"</strong>. You can also go directly to <a href="https://onedrive.com" target="_blank">onedrive.com</a>.</span></li>
+          <li><span><strong>Find your shared drives</strong> &mdash; After the March 24 switchover, shortcuts to your shared drives will appear in <strong>"My files"</strong> at the root level &mdash; folders like "Accounting", "Dispatch", "Admin", etc.</span></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3><span class="card-icon">&#128193;</span> Accessing Shared Drive Files</h3>
+        <ul class="info-list">
+          <li>Click any shortcut folder to browse that shared drive's files and subfolders.</li>
+          <li>Use the <strong>search bar</strong> at the top to find files across all your drives instantly.</li>
+          <li>Click a file to open it in the browser &mdash; Word, Excel, and PowerPoint open in their web editors.</li>
+          <li>All changes save automatically. Your team sees updates in real time.</li>
+          <li>To download a file, select it and click <strong>"Download"</strong> in the toolbar.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tips row -->
+    <div class="tip-row">
+      <div class="tip tip--green">
+        <span class="tip-icon">&#11088;</span>
+        <span><strong>Quick Access:</strong> Right-click a folder &rarr; <em>"Pin to Quick access"</em> to keep it at the top of OneDrive.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">&#128279;</span>
+        <span><strong>Sharing:</strong> Select a file &rarr; <strong>"Share"</strong> to send a link. Control whether others can edit or view.</span>
+      </div>
+      <div class="tip tip--yellow">
+        <span class="tip-icon">&#9888;&#65039;</span>
+        <span><strong>Missing a shortcut?</strong> Contact IT helpdesk and they'll add it for you right away.</span>
+      </div>
+    </div>
+
+  </div><!-- /view-web -->
+
+  <!-- ═══ BOTTOM ROW: FAQ + HELPDESK ═══ -->
+  <div class="bottom-row">
+
+    <div class="faq-card">
+      <div class="section-label">Frequently Asked Questions</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Where will my Google Drive files be?<span class="faq-chevron">&#8964;</span></button>
+        <div class="faq-a">
+          <p>All files from Google shared drives are being migrated to SharePoint. The folder structure stays the same &mdash; only the location changes. You'll access everything through OneDrive using shortcuts that IT will set up for you.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What's happening to my shared drives?<span class="faq-chevron">&#8964;</span></button>
+        <div class="faq-a">
+          <p>Each Google shared drive becomes a SharePoint document library. IT will create shortcuts in your OneDrive that point directly to the SharePoint libraries you have access to. They'll look and work just like regular folders.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Will I still be able to access Google Drive?<span class="faq-chevron">&#8964;</span></button>
+        <div class="faq-a">
+          <p><strong>Yes, temporarily.</strong> Google Drive will remain available in read-only mode for 2&ndash;4 weeks after the switchover. You can reference old files there, but all new work should go into SharePoint/OneDrive starting March 24.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">A shortcut is missing &mdash; what do I do?<span class="faq-chevron">&#8964;</span></button>
+        <div class="faq-a">
+          <p>Contact the IT helpdesk. Let them know which shared drive you need access to and they'll add the shortcut for you right away.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How do I share files with others?<span class="faq-chevron">&#8964;</span></button>
+        <div class="faq-a">
+          <p><strong>Desktop:</strong> Right-click the file in File Explorer and choose <em>"Share"</em>. Type a colleague's name or email to send them a link.</p>
+          <p><strong>Web:</strong> Select the file in OneDrive and click <strong>"Share"</strong> in the toolbar. Choose whether they can edit or just view.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need to do anything before March 24?<span class="faq-chevron">&#8964;</span></button>
+        <div class="faq-a">
+          <p><strong>Yes &mdash; set up OneDrive now.</strong> Follow the "First-Time Setup" steps above so you're ready to go on switchover day. Make sure you can sign in with your <code>@safesitellc.com</code> account and see the blue cloud icon in your system tray or menu bar.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="helpdesk-card">
+      <div class="section-label">IT Helpdesk</div>
+      <h3>Need help?</h3>
+      <p class="contact-sub">Questions about the switchover or setting up OneDrive? Reach out anytime.</p>
+      <div class="contact-buttons">
+        <a class="contact-btn btn-ticket" href="https://support.nexsitepartners.com/support/tickets/new" target="_blank">
+          <span class="contact-btn-icon">&#127915;</span>
+          <span class="contact-btn-text">
+            <span class="label">Submit a Ticket</span>
+            <span class="value">support.nexsitepartners.com</span>
+          </span>
+        </a>
+        <a class="contact-btn btn-phone" href="tel:7206847749">
+          <span class="contact-btn-icon">&#128222;</span>
+          <span class="contact-btn-text">
+            <span class="label">Call Helpdesk</span>
+            <span class="value">720-684-7749</span>
+          </span>
+        </a>
+        <a class="contact-btn btn-email" href="mailto:helpdesk@nexsitepartners.com">
+          <span class="contact-btn-icon">&#9993;&#65039;</span>
+          <span class="contact-btn-text">
+            <span class="label">Send an Email</span>
+            <span class="value">helpdesk@nexsitepartners.com</span>
+          </span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /page-body -->
+
+<footer>
+  Safe Site Utility Services LLC &nbsp;&middot;&nbsp; OneDrive &amp; SharePoint Setup Guide &nbsp;&middot;&nbsp; March 2026
+</footer>
+
+<script>
+function switchView(view) {
+  document.getElementById('view-desktop').style.display = view === 'desktop' ? '' : 'none';
+  document.getElementById('view-web').style.display = view === 'web' ? '' : 'none';
+  document.querySelectorAll('.toggle-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.view === view);
+  });
+}
+
+function toggleFaq(btn) {
+  var item = btn.closest('.faq-item');
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>

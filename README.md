@@ -1,12 +1,13 @@
-# postcutover-instructions
+# setup-guides
 
-Post-migration setup guide for Safe Site Utility Services employees transitioning from Google Workspace to Microsoft 365.
+Setup guides for Safe Site Utility Services employees hosted on Cloudflare Pages.
 
-**Live site:** [postcutover.nexsite.co](https://postcutover.nexsite.co)
+**Live site:** [setup.nexsite.co](https://setup.nexsite.co)
 
-## What is this?
+## Guides
 
-A static single-page site that guides employees through setting up OneDrive and accessing their shared drive files after the Google Drive to SharePoint migration. The site covers:
+### `/onedrive` — OneDrive & SharePoint Setup
+Guides employees through setting up OneDrive and accessing shared drive files after the Google Drive to SharePoint migration.
 
 - **Desktop (OneDrive App)** — First-time setup, finding the OneDrive cloud icon (blue = signed in, grey = needs sign-in), accessing shared drive shortcuts in File Explorer/Finder
 - **OneDrive Web** — Navigating office.com's Copilot interface to OneDrive via Apps, finding shared drive shortcuts in My Files
@@ -20,10 +21,10 @@ Features a toggleable Desktop/Web view, system-theme dark mode, and responsive m
 Hosted on Cloudflare Pages. To deploy:
 
 ```bash
-npx wrangler pages deploy . --project-name postcutover-instructions
+npx wrangler pages deploy . --project-name setup-guides
 ```
 
-Custom domain `postcutover.nexsite.co` is configured in the Cloudflare dashboard.
+Custom domain `setup.nexsite.co` requires a CNAME record pointing to `setup-guides.pages.dev`.
 
 ## Related projects
 
