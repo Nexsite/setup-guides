@@ -6,7 +6,7 @@ Setup guides for Safe Site Utility Services employees hosted on Cloudflare Pages
 
 ## Guides
 
-### `/onedrive` — OneDrive & SharePoint Setup
+### `/ssus/onedrive` — OneDrive & SharePoint Setup (Safe Site Utility Services)
 Guides employees through setting up OneDrive and accessing shared drive files after the Google Drive to SharePoint migration.
 
 - **Desktop (OneDrive App)** — First-time setup, finding the OneDrive cloud icon (blue = signed in, grey = needs sign-in), accessing shared drive shortcuts in File Explorer/Finder
