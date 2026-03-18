@@ -16,7 +16,9 @@
       "Bash(mv index.html onedrive/index.html)",
       "Bash(curl -s -X POST \"https://api.cloudflare.com/client/v4/accounts/34f4732dca54f8db9a579893b75873b9/pages/projects/setup-guides/domains\" -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\" --data '{\"\"\"\"name\"\"\"\":\"\"\"\"setup.nexsite.co\"\"\"\"}')",
       "Bash(mkdir -p ssus)",
-      "Bash(mv onedrive:*)"
+      "Bash(mv onedrive:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://setup.nexsite.co/ssus/onedrive)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -L https://setup.nexsite.co/ssus/onedrive)"
     ]
   }
 }
