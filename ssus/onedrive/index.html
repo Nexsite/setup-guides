@@ -60,6 +60,14 @@
   .step-list a { color: var(--blue); text-decoration: none; font-weight: 600; }
   .step-list a:hover { text-decoration: underline; }
 
+  /* ── LAUNCH BUTTON ── */
+  .launch-wrap { text-align: center; margin-bottom: 24px; }
+  .launch-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; border-radius: 12px; font-size: 15px; font-weight: 700; text-decoration: none; color: white; background: var(--blue); border: none; cursor: pointer; transition: filter 0.15s, transform 0.1s, box-shadow 0.15s; box-shadow: 0 2px 8px rgba(15,95,206,0.25); }
+  .launch-btn:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,95,206,0.35); }
+  .launch-btn:active { transform: none; }
+  .launch-btn-icon { font-size: 20px; }
+  .launch-note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
   /* ── BULLET LIST ── */
   .info-list { list-style: none; }
   .info-list li { padding: 6px 0; padding-left: 18px; position: relative; font-size: 14px; }
@@ -149,6 +157,8 @@
     .btn-ticket { background: #2563eb; }
     .btn-phone { background: #059669; }
     .btn-email { background: #1f2937; color: var(--text); border-color: var(--border); }
+    .launch-btn { background: #2563eb; box-shadow: 0 2px 8px rgba(37,99,235,0.35); }
+    .launch-btn:hover { box-shadow: 0 4px 12px rgba(37,99,235,0.5); }
     footer { border-top-color: var(--border); }
   }
 
@@ -188,6 +198,14 @@
 
   <!-- ═══ DESKTOP INSTRUCTIONS ═══ -->
   <div id="view-desktop">
+
+    <div class="launch-wrap">
+      <a class="launch-btn" href="odopen://launch">
+        <span class="launch-btn-icon">&#9729;&#65039;</span>
+        Launch OneDrive
+      </a>
+      <div class="launch-note">Your browser may ask for permission to open OneDrive</div>
+    </div>
 
     <div class="cards-grid">
       <div class="card">
@@ -232,6 +250,13 @@
 
   <!-- ═══ WEB INSTRUCTIONS ═══ -->
   <div id="view-web" style="display:none">
+
+    <div class="launch-wrap">
+      <a class="launch-btn" href="https://onedrive.com" target="_blank">
+        <span class="launch-btn-icon">&#127760;</span>
+        Open OneDrive
+      </a>
+    </div>
 
     <div class="cards-grid">
       <div class="card">
